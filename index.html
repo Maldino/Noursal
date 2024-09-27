@@ -122,8 +122,13 @@
 
         <button id="refresh-btn">تحديث القائمة</button>
     </div>
+	
+	<div id="default-message" class="default-message">
+        <p>يرجى اختيار مؤلف أو قسم، ثم اضغط على "تحديث القائمة" لعرض النتائج.</p>
+    </div>
 
-    <!-- بانر الكتاب الأول -->
+    <!-- Books Banners -->
+	<div id="book-banners">
 <div class="book-banner" data-author="author1" data-category="category1">
     <h2 class="book-title">إغاثة اللهفان في مصايد الشيطان</h2>
 	<a href="https://play.google.com/store/apps/details?id=com.noursal.EghasetAlhfanBook" target="_blank">
@@ -154,39 +159,49 @@
             <p>مؤلف: ابن ابي الدنيا | فئة: شريعة</p>
         </div>
     </div>
+    </div>
 
     <!-- رسالة عدم وجود نتائج -->
     <div class="no-results" id="no-results-msg">لا يوجد ما يناسب بحثك.</div>
 
     <script>
         document.getElementById('refresh-btn').addEventListener('click', function() {
-            var selectedAuthor = document.getElementById('author-select').value;
-            var selectedCategory = document.getElementById('category-select').value;
+    var selectedAuthor = document.getElementById('author-select').value;
+    var selectedCategory = document.getElementById('category-select').value;
 
-            var banners = document.querySelectorAll('.book-banner');
-            banners.forEach(function(banner) {
-                banner.style.display = 'none';
-            });
+    var banners = document.querySelectorAll('.book-banner');
+    banners.forEach(function(banner) {
+        banner.style.display = 'none';
+    });
 
-            document.getElementById('no-results-msg').style.display = 'none';
+    // إخفاء الرسالة الافتراضية
+    document.getElementById('default-message').style.display = 'none';
+    document.getElementById('no-results-msg').style.display = 'none';
 
-            var resultsFound = false;
-            banners.forEach(function(banner) {
-                var bannerAuthor = banner.getAttribute('data-author');
-                var bannerCategory = banner.getAttribute('data-category');
-                
-                if ((selectedAuthor === "" || bannerAuthor === selectedAuthor) && 
-                    (selectedCategory === "" || bannerCategory === selectedCategory)) {
-                    banner.style.display = 'block';
-                    resultsFound = true;
-                }
-            });
+    var resultsFound = false;
+    banners.forEach(function(banner) {
+        var bannerAuthor = banner.getAttribute('data-author');
+        var bannerCategory = banner.getAttribute('data-category');
+        
+        if ((selectedAuthor === "" || bannerAuthor === selectedAuthor) && 
+            (selectedCategory === "" || bannerCategory === selectedCategory)) {
+            banner.style.display = 'block';
+            resultsFound = true;
+        }
+    });
 
-            
-            if (!resultsFound) {
-                document.getElementById('no-results-msg').style.display = 'block';
-            }
-        });
+    if (!resultsFound) {
+        document.getElementById('no-results-msg').style.display = 'block';
+    } else {
+        // إظهار بانرات الكتب إذا كانت هناك نتائج
+        document.getElementById('book-banners').style.display = 'block';
+    }
+});
+
+// إخفاء بانرات الكتب عند تحميل الصفحة لأول مرة
+window.onload = function() {
+    document.getElementById('book-banners').style.display = 'none';
+};
     </script>
 
 </body>
