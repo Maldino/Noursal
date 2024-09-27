@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة نورسال للكتب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            direction: rtl;
+            text-align: right;
+        }
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* اجعل العناصر تلتف في حالة صغر العرض */
+}
+
+select, button {
+    padding: 10px;
+    font-size: 16px;
+    width: 30%; /* جعل العرض 30% لكل عنصر */
+    margin-bottom: 10px; /* مسافة بين العناصر على الشاشات الصغيرة */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+		
+		@media (max-width: 600px) {
+    select, button {
+        width: 100%; /* تكديس العناصر وجعلها تأخذ عرض الصفحة الكامل */
+    }
+
+    button {
+        width: 50%; /* اجعل الزر 50% من العرض وضعه في المنتصف */
+        margin: 0 auto; /* تمركز الزر في المنتصف */
+    }
+}
+        .book-banner {
+    display: block;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.book-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.book-image {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.book-info {
+    text-align: center;
+}
+
+        .book-banner img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .book-info h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .book-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .no-results {
+            display: none; /* Hidden by default */
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filter-container">
+        <select id="author-select">
+            <option value="" disabled selected hidden>اختر المؤلف</option>
+            <option value="">-=[ جميع المؤلفين ]=-</option>
+            <option value="author1">ابن القيم</option>
+            <option value="author2">ابن الجوزي</option>
+            <option value="author3">ابن ابي الدنيا</option>
+            <option value="author4">الجاحظ</option>
+            <option value="author5">النووي</option>
+            <option value="author6">ابو حنيفة النعمان</option>
+            <option value="author7">الأصمعي</option>
+            <option value="author8">الذهبي</option>
+            <option value="author9">ابن المقفع</option>
+            <option value="author10">ابن كثير</option>
+            <option value="author11">الواحدي</option>
+            <option value="author12">طرفة بن العبد</option>
+            <option value="author13">عبد الله فكري</option>
+        </select>
+
+        <select id="category-select">
+            <option value="" disabled selected hidden>اختر القسم</option>
+			<option value="">-=[ جميع الأقسام ]=-</option>
+            <option value="category1">الرقائق والآداب والأذكار</option>
+            <option value="category2"></option>
+            <option value="category3"></option>
+        </select>
+
+        <button id="refresh-btn">تحديث القائمة</button>
+    </div>
+
+    <!-- بانر الكتاب الأول -->
+<div class="book-banner" data-author="author1" data-category="category1">
+    <h2 class="book-title">إغاثة اللهفان في مصايد الشيطان</h2>
+	<a href="https://play.google.com/store/apps/details?id=com.noursal.EghasetAlhfanBook" target="_blank">
+    <img src="https://firebasestorage.googleapis.com/v0/b/books-and-nouvels.appspot.com/o/eghaset.jpg?alt=media&token=d953272d-2363-41b0-bcbc-7619b670d0b4" alt="إغاثة اللهفان في مصايد الشيطان" class="book-image">
+	</a>
+    <div class="book-info">
+        <p>المؤلف: ابن القيم | القسم: الرقائق والآداب والأذكار</p>
+    </div>
+</div>
+
+
+    <!-- بانر الكتاب الثاني -->
+    <div class="book-banner" data-author="author2" data-category="category2">
+	<a href="" target="_blank">
+        <img src="banner2.jpg" alt="كتاب 2">
+	</a>
+        <div class="book-info">
+            <h2>كتاب 2</h2>
+            <p>مؤلف: ابن الجوزي | فئة: رقائق</p>
+        </div>
+    </div>
+
+    <!-- بانر الكتاب الثالث -->
+    <div class="book-banner" data-author="author3" data-category="category3">
+        <img src="banner3.jpg" alt="كتاب 3">
+        <div class="book-info">
+            <h2>كتاب 3</h2>
+            <p>مؤلف: ابن ابي الدنيا | فئة: شريعة</p>
+        </div>
+    </div>
+
+    <!-- رسالة عدم وجود نتائج -->
+    <div class="no-results" id="no-results-msg">لا يوجد ما يناسب بحثك.</div>
+
+    <script>
+        document.getElementById('refresh-btn').addEventListener('click', function() {
+            var selectedAuthor = document.getElementById('author-select').value;
+            var selectedCategory = document.getElementById('category-select').value;
+
+            var banners = document.querySelectorAll('.book-banner');
+            banners.forEach(function(banner) {
+                banner.style.display = 'none';
+            });
+
+            document.getElementById('no-results-msg').style.display = 'none';
+
+            var resultsFound = false;
+            banners.forEach(function(banner) {
+                var bannerAuthor = banner.getAttribute('data-author');
+                var bannerCategory = banner.getAttribute('data-category');
+                
+                if ((selectedAuthor === "" || bannerAuthor === selectedAuthor) && 
+                    (selectedCategory === "" || bannerCategory === selectedCategory)) {
+                    banner.style.display = 'block';
+                    resultsFound = true;
+                }
+            });
+
+            
+            if (!resultsFound) {
+                document.getElementById('no-results-msg').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
