@@ -87,8 +87,11 @@
             text-align: center;
             margin-top: 20px;
             font-size: 18px;
-            color: #ff0000;
+            color: #000000;
         }
+		#book-banners {
+    display: none;
+}
     </style>
 </head>
 <body>
@@ -129,79 +132,73 @@
 
     <!-- Books Banners -->
 	<div id="book-banners">
-<div class="book-banner" data-author="author1" data-category="category1">
-    <h2 class="book-title">إغاثة اللهفان في مصايد الشيطان</h2>
-	<a href="https://play.google.com/store/apps/details?id=com.noursal.EghasetAlhfanBook" target="_blank">
-    <img src="https://firebasestorage.googleapis.com/v0/b/books-and-nouvels.appspot.com/o/eghaset.jpg?alt=media&token=d953272d-2363-41b0-bcbc-7619b670d0b4" alt="إغاثة اللهفان في مصايد الشيطان" class="book-image">
-	</a>
-    <div class="book-info">
-        <p>المؤلف: ابن القيم | القسم: الرقائق والآداب والأذكار</p>
-    </div>
-</div>
-
-
-    <!-- بانر الكتاب الثاني -->
-    <div class="book-banner" data-author="author2" data-category="category2">
-	<a href="" target="_blank">
-        <img src="banner2.jpg" alt="كتاب 2">
-	</a>
-        <div class="book-info">
-            <h2>كتاب 2</h2>
-            <p>مؤلف: ابن الجوزي | فئة: رقائق</p>
+        <div class="book-banner" data-author="author1" data-category="category1">
+            <h2 class="book-title">إغاثة اللهفان في مصايد الشيطان</h2>
+            <a href="https://play.google.com/store/apps/details?id=com.noursal.EghasetAlhfanBook" target="_blank">
+            <img src="https://firebasestorage.googleapis.com/v0/b/books-and-nouvels.appspot.com/o/eghaset.jpg?alt=media&token=d953272d-2363-41b0-bcbc-7619b670d0b4" alt="إغاثة اللهفان في مصايد الشيطان" class="book-image">
+            </a>
+            <div class="book-info">
+                <p>المؤلف: ابن القيم | القسم: الرقائق والآداب والأذكار</p>
+            </div>
         </div>
-    </div>
 
-    <!-- بانر الكتاب الثالث -->
-    <div class="book-banner" data-author="author3" data-category="category3">
-        <img src="banner3.jpg" alt="كتاب 3">
-        <div class="book-info">
-            <h2>كتاب 3</h2>
-            <p>مؤلف: ابن ابي الدنيا | فئة: شريعة</p>
+        <!-- بانر الكتاب الثاني -->
+        <div class="book-banner" data-author="author2" data-category="category2">
+            <a href="" target="_blank">
+                <img src="banner2.jpg" alt="كتاب 2">
+            </a>
+            <div class="book-info">
+                <h2>كتاب 2</h2>
+                <p>مؤلف: ابن الجوزي | فئة: رقائق</p>
+            </div>
         </div>
-    </div>
-    </div>
+
 
     <!-- رسالة عدم وجود نتائج -->
     <div class="no-results" id="no-results-msg">لا يوجد ما يناسب بحثك.</div>
 
     <script>
         document.getElementById('refresh-btn').addEventListener('click', function() {
-    var selectedAuthor = document.getElementById('author-select').value;
-    var selectedCategory = document.getElementById('category-select').value;
+            var selectedAuthor = document.getElementById('author-select').value;
+            var selectedCategory = document.getElementById('category-select').value;
+            
+            // حفظ الاختيارات في Local Storage
+            localStorage.setItem('selectedAuthor', selectedAuthor);
+            localStorage.setItem('selectedCategory', selectedCategory);
 
-    var banners = document.querySelectorAll('.book-banner');
-    banners.forEach(function(banner) {
-        banner.style.display = 'none';
-    });
+            var banners = document.querySelectorAll('.book-banner');
+            banners.forEach(function(banner) {
+                banner.style.display = 'none';
+            });
 
-    // إخفاء الرسالة الافتراضية
-    document.getElementById('default-message').style.display = 'none';
-    document.getElementById('no-results-msg').style.display = 'none';
+            // إخفاء الرسالة الافتراضية
+            document.getElementById('default-message').style.display = 'none';
+            document.getElementById('no-results-msg').style.display = 'none';
 
-    var resultsFound = false;
-    banners.forEach(function(banner) {
-        var bannerAuthor = banner.getAttribute('data-author');
-        var bannerCategory = banner.getAttribute('data-category');
-        
-        if ((selectedAuthor === "" || bannerAuthor === selectedAuthor) && 
-            (selectedCategory === "" || bannerCategory === selectedCategory)) {
-            banner.style.display = 'block';
-            resultsFound = true;
-        }
-    });
+            var resultsFound = false;
+            banners.forEach(function(banner) {
+                var bannerAuthor = banner.getAttribute('data-author');
+                var bannerCategory = banner.getAttribute('data-category');
+                
+                if ((selectedAuthor === "" || bannerAuthor === selectedAuthor) && 
+                    (selectedCategory === "" || bannerCategory === selectedCategory)) {
+                    banner.style.display = 'block';
+                    resultsFound = true;
+                }
+            });
 
-    if (!resultsFound) {
-        document.getElementById('no-results-msg').style.display = 'block';
-    } else {
-        // إظهار بانرات الكتب إذا كانت هناك نتائج
-        document.getElementById('book-banners').style.display = 'block';
-    }
-});
+            if (!resultsFound) {
+                document.getElementById('no-results-msg').style.display = 'block';
+            } else {
+                // إظهار بانرات الكتب إذا كانت هناك نتائج
+                document.getElementById('book-banners').style.display = 'block';
+            }
+        });
 
-// إخفاء بانرات الكتب عند تحميل الصفحة لأول مرة
-window.onload = function() {
-    document.getElementById('book-banners').style.display = 'none';
-};
+        window.onload = function() {
+            // إخفاء بانرات الكتب عند تحميل الصفحة لأول مرة
+            document.getElementById('book-banners').style.display = 'none';
+        };
     </script>
 
 </body>
