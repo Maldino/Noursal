@@ -13,35 +13,35 @@
             direction: rtl;
             text-align: right;
         }
-.filter-container {
+	.filter-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* اجعل العناصر تلتف في حالة صغر العرض */
-}
+    flex-wrap: wrap;
+	}
 
-select, button {
+	select, button {
     padding: 10px;
     font-size: 16px;
-    width: 30%; /* جعل العرض 30% لكل عنصر */
-    margin-bottom: 10px; /* مسافة بين العناصر على الشاشات الصغيرة */
-}
+    width: 30%;
+    margin-bottom: 10px;
+	}
 
-button {
-    background-color: #4CAF50;
+	button {
+    background-color: #00346e;
     color: white;
     border: none;
     cursor: pointer;
-}
+	}
 		
-		@media (max-width: 600px) {
+	@media (max-width: 600px) {
     select, button {
-        width: 100%; /* تكديس العناصر وجعلها تأخذ عرض الصفحة الكامل */
+        width: 100%;
     }
 
     button {
-        width: 50%; /* اجعل الزر 50% من العرض وضعه في المنتصف */
-        margin: 0 auto; /* تمركز الزر في المنتصف */
+        width: 50%;
+        margin: 0 auto;
     }
 }
         .book-banner {
@@ -83,7 +83,7 @@ button {
             color: #666;
         }
         .no-results {
-            display: none; /* Hidden by default */
+            display: none;
             text-align: center;
             margin-top: 20px;
             font-size: 18px;
